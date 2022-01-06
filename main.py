@@ -29,7 +29,7 @@ def get_words_from_file(filename: str):
 
 
 def main(n_grams: str):
-    given_n_grams = [int(x.strip()) for x in n_grams.split(',') if x.strip().isdigit() and int(x.strip())]
+    given_n_grams = [int(x.strip().replace(' ', '')) for x in n_grams.split(',') if x.strip().replace(' ', '').isdigit()]
     filenames = [f_name for f_name in os.listdir() if get_extension(f_name) in EXTENSIONS]
     for filename in filenames:
         words = get_words_from_file(filename)
