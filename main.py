@@ -13,7 +13,7 @@ def get_extension(filename: str):
     return filename.split('.')[-1]
 
 
-def get_text_from_doc(filename: str):
+def get_words_from_file(filename: str):
     extension = get_extension(filename)
     if extension not in EXTENSIONS:
         raise InvalidFileExtension(f'Неверное расширение файла: {filename}')
@@ -25,18 +25,19 @@ def get_text_from_doc(filename: str):
         doc = Document(filename)
         for p in doc.paragraphs:
             text += '\n' + p.text
-    return text.lstrip('\n')
+    return text.lstrip('\n').split()
 
 
 def main(n_grams: str):
     given_n_grams = [int(x.strip()) for x in n_grams.split(',') if x.strip().isdigit() and int(x.strip())]
     filenames = [f_name for f_name in os.listdir() if get_extension(f_name) in EXTENSIONS]
     for filename in filenames:
-        text = get_text_from_doc(filename)
-        if not text:
+        words = get_words_from_file(filename)
+        if not words:
             continue
-        supported_n_grams = [n_gram for n_gram in given_n_grams if n_gram <= len(text)]
-        print(filename, ', '.join(map(str, supported_n_grams)))
+        supported_n_grams = [n_gram for n_gram in given_n_grams if n_gram <= len(words)]
+        print(filename, ', '.join(map(str, supported_n_grams)), ' '.join(words))
+
 
 if __name__ == '__main__':
     parser = ArgumentParser()
