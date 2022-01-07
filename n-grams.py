@@ -67,7 +67,7 @@ def main(raw_n_grams: str):
             for n in n_grams:
                 if i < len(output[n]):
                     row.extend([output[n][i][0], output[n][i][1],
-                               round(output[n][i][1] / total_words_length * 100, ndigits=15)])
+                               f'{round(output[n][i][1] / total_words_length * 100, ndigits=15)}%'])
                 else:
                     missed_count += 1
             for _ in range(missed_count * 3):
