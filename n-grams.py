@@ -26,7 +26,7 @@ def get_words_from_file(filename: str):
         doc = Document(filename)
         for p in doc.paragraphs:
             text += '\n' + p.text
-    return [x.strip(',.:;-–—') for x in text.lower().lstrip('\n').split()]
+    return [x.strip(',.:;-–—_') for x in text.lower().lstrip('\n').split() if x.strip(',.:;-–—_')]
 
 
 def main(raw_n_grams: str):
@@ -67,7 +67,7 @@ def main(raw_n_grams: str):
             for n in n_grams:
                 if i < len(output[n]):
                     row.extend([output[n][i][0], output[n][i][1],
-                               round(output[n][i][1] / total_words_length * 100, ndigits=2)])
+                               round(output[n][i][1] / total_words_length * 100, ndigits=15)])
                 else:
                     missed_count += 1
             for _ in range(missed_count * 3):
